@@ -103,6 +103,7 @@ def read_root():
             <a href="/users" class="button">View All Users</a>
             <a href="/docs" class="button">API Documentation</a>
             <a href="/download/csv" class="button">Download CSV</a>
+            <a href="/download/db" class="button">Download Database</a>
 
             <script>
                 document.getElementById('addUserForm').addEventListener('submit', async (e) => {
@@ -302,3 +303,8 @@ def download_csv():
     df = pd.read_sql("SELECT * FROM users", engine)
     df.to_csv('users.csv', index=False)
     return FileResponse('users.csv', media_type='text/csv', filename='users.csv')
+
+# Download SQLite database endpoint
+@app.get("/download/db")
+def download_db():
+    return FileResponse(db_path, media_type='application/x-sqlite3', filename='example.db')
